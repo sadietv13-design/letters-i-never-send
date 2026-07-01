@@ -1,285 +1,342 @@
-// ===============================
+// =====================================
 // Letters I Never Sent v2
 // Part 1
-// ===============================
+// =====================================
 
 const opening = document.getElementById("opening");
 const collection = document.getElementById("collection");
 const writer = document.getElementById("writer");
 const reader = document.getElementById("reader");
 
-const startEnvelope = document.getElementById("startEnvelope");
-const newLetterBtn = document.getElementById("newLetterBtn");
-const saveBtn = document.getElementById("saveBtn");
+const introEnvelope = document.getElementById("introEnvelope");
 
-const backButtons = document.querySelectorAll(".backBtn");
+const writeBtn = document.getElementById("writeBtn");
+const saveBtn = document.getElementById("saveLetter");
+const cancelBtn = document.querySelector(".back");
+const backBtn = document.getElementById("backToCollection");
 
-const letterGrid = document.getElementById("letterGrid");
+const letterCollection = document.getElementById("letterCollection");
 const letterView = document.getElementById("letterView");
 
 function showScreen(screen){
 
-    document.querySelectorAll(".screen").forEach(s=>{
-        s.classList.remove("active");
-    });
+document.querySelectorAll(".screen").forEach(page=>{
 
-    screen.classList.add("active");
+page.classList.remove("active");
+
+});
+
+screen.classList.add("active");
 
 }
 
-startEnvelope.addEventListener("click",()=>{
+let letters = JSON.parse(localStorage.getItem("letters")) || [];
 
-    startEnvelope.classList.add("open");
+introEnvelope.addEventListener("click",()=>{
 
-    setTimeout(()=>{
+introEnvelope.classList.add("open");
 
-        showScreen(collection);
+setTimeout(()=>{
 
-        renderLetters();
+showScreen(collection);
 
-    },1200);
+renderLetters();
 
-});
+introEnvelope.classList.remove("open");
 
-newLetterBtn.addEventListener("click",()=>{
-
-    showScreen(writer);
+},1200);
 
 });
 
-backButtons.forEach(btn=>{
+writeBtn.addEventListener("click",()=>{
 
-    btn.addEventListener("click",()=>{
-
-        showScreen(collection);
-
-        renderLetters();
-
-    });
+showScreen(writer);
 
 });
-// ===============================
-// Save a Letter
-// ===============================
 
-saveBtn.addEventListener("click", saveLetter);
+cancelBtn.addEventListener("click",()=>{
 
-function saveLetter(){
+showScreen(collection);
 
-    const title = document.getElementById("title").value.trim();
-    const content = document.getElementById("content").value.trim();
-    const song = document.getElementById("song").value.trim();
-    const film = document.getElementById("film").value.trim();
+});
 
-    if(content === ""){
+backBtn.addEventListener("click",()=>{
 
-        alert("Write something first 💙");
-        return;
+showScreen(collection);
 
-    }
+});
+// =====================================
+// Letters I Never Sent v2
+// Part 1
+// =====================================
 
-    const letters = JSON.parse(localStorage.getItem("letters")) || [];
+const opening = document.getElementById("opening");
+const collection = document.getElementById("collection");
+const writer = document.getElementById("writer");
+const reader = document.getElementById("reader");
 
-    letters.unshift({
+const introEnvelope = document.getElementById("introEnvelope");
 
-        title: title || "Untitled Letter",
+const writeBtn = document.getElementById("writeBtn");
+const saveBtn = document.getElementById("saveLetter");
+const cancelBtn = document.querySelector(".back");
+const backBtn = document.getElementById("backToCollection");
 
-        content,
+const letterCollection = document.getElementById("letterCollection");
+const letterView = document.getElementById("letterView");
 
-        song,
+function showScreen(screen){
 
-        film,
+document.querySelectorAll(".screen").forEach(page=>{
 
-        date: new Date().toLocaleString()
+page.classList.remove("active");
 
-    });
+});
 
-    localStorage.setItem("letters", JSON.stringify(letters));
-
-    document.getElementById("title").value = "";
-    document.getElementById("content").value = "";
-    document.getElementById("song").value = "";
-    document.getElementById("film").value = "";
-
-    showScreen(collection);
-
-    renderLetters();
+screen.classList.add("active");
 
 }
-// ===============================
+
+let letters = JSON.parse(localStorage.getItem("letters")) || [];
+
+introEnvelope.addEventListener("click",()=>{
+
+introEnvelope.classList.add("open");
+
+setTimeout(()=>{
+
+showScreen(collection);
+
+renderLetters();
+
+introEnvelope.classList.remove("open");
+
+},1200);
+
+});
+
+writeBtn.addEventListener("click",()=>{
+
+showScreen(writer);
+
+});
+
+cancelBtn.addEventListener("click",()=>{
+
+showScreen(collection);
+
+});
+
+backBtn.addEventListener("click",()=>{
+
+showScreen(collection);
+
+});
+// =====================================
 // Render Envelope Collection
-// ===============================
+// =====================================
 
 function renderLetters(){
 
-    const letters = JSON.parse(localStorage.getItem("letters")) || [];
+letters = JSON.parse(localStorage.getItem("letters")) || [];
 
-    letterGrid.innerHTML = "";
+letterCollection.innerHTML = "";
 
-    if(letters.length === 0){
+if(letters.length===0){
 
-        letterGrid.innerHTML = `
-            <div style="
-                width:100%;
-                text-align:center;
-                opacity:.8;
-                padding:40px;
-            ">
-                <h3>No letters yet 💙</h3>
-                <p>Write your first letter.</p>
-            </div>
-        `;
+letterCollection.innerHTML=`
 
-        return;
+<div class="empty">
 
-    }
+<h2>No letters yet 💙</h2>
 
-    letters.forEach((letter,index)=>{
+<p>Write your first letter.</p>
 
-        const card = document.createElement("div");
+</div>
 
-        card.className = "letter-card";
+`;
 
-        card.innerHTML = `
-            <div class="letter-title">
-                ${letter.title}
-            </div>
-        `;
-
-        card.addEventListener("click",()=>{
-
-            openLetter(index);
-
-        });
-
-        letterGrid.appendChild(card);
-
-    });
+return;
 
 }
-// ===============================
+
+letters.forEach((letter,index)=>{
+
+const card=document.createElement("div");
+
+card.className="letter-card";
+
+card.innerHTML=`
+
+<div class="letter-title">
+
+${letter.title}
+
+</div>
+
+`;
+
+card.addEventListener("click",()=>{
+
+openLetter(index);
+
+});
+
+letterCollection.appendChild(card);
+
+});
+
+}
+
+// =====================================
 // Open Letter
-// ===============================
+// =====================================
 
 function openLetter(index){
 
-    const letters = JSON.parse(localStorage.getItem("letters")) || [];
+const letter=letters[index];
 
-    const letter = letters[index];
+letterView.innerHTML=`
 
-    letterView.innerHTML = `
+<div class="meta">
 
-        <div class="meta">
-            ${letter.date}
-        </div>
+${letter.date}
 
-        <h3>
-            ${letter.title}
-        </h3>
+</div>
 
-        <p>
-            ${letter.content.replace(/\n/g,"<br>")}
-        </p>
+<h3>
 
-        ${
-            letter.song
-            ? `<p><strong>🎵 Song:</strong> ${letter.song}</p>`
-            : ""
-        }
+${letter.title}
 
-        ${
-            letter.film
-            ? `<p><strong>🎬 Film:</strong> ${letter.film}</p>`
-            : ""
-        }
+</h3>
 
-        <button
-            class="deleteBtn"
-            onclick="deleteLetter(${index})">
-            🗑 Delete Letter
-        </button>
+<p>
 
-    `;
+${letter.content.replace(/\n/g,"<br>")}
 
-    showScreen(reader);
+</p>
 
-}
+${letter.song ? `<div class="media">🎵 ${letter.song}</div>` : ""}
 
-// ===============================
+${letter.film ? `<div class="media">🎬 ${letter.film}</div>` : ""}
+
+<button class="deleteBtn" onclick="deleteLetter(${index})">
+
+Delete Letter
+
+</button>
+
+`;
+
+showScreen(reader);
+
+                }
+// =====================================
 // Delete Letter
-// ===============================
+// =====================================
 
 function deleteLetter(index){
 
-    if(!confirm("Delete this letter forever?")) return;
+if(!confirm("Delete this letter forever?")){
 
-    let letters = JSON.parse(localStorage.getItem("letters")) || [];
-
-    letters.splice(index,1);
-
-    localStorage.setItem(
-        "letters",
-        JSON.stringify(letters)
-    );
-
-    showScreen(collection);
-
-    renderLetters();
-
-              }
-// ===============================
-// PART 5 - Startup & Animations
-// ===============================
-
-// Fade between screens
-function fadeTo(screen){
-
-    document.querySelectorAll(".screen").forEach(s=>{
-
-        s.style.opacity="0";
-
-    });
-
-    setTimeout(()=>{
-
-        showScreen(screen);
-
-        screen.style.opacity="1";
-
-    },250);
+return;
 
 }
 
-// Floating animation for envelopes
-function animateEnvelopes(){
+letters.splice(index,1);
 
-    const cards=document.querySelectorAll(".letter-card");
+localStorage.setItem(
 
-    cards.forEach((card,index)=>{
+"letters",
 
-        card.style.animation=
-            `float 3s ease-in-out ${index*0.15}s infinite`;
+JSON.stringify(letters)
 
-    });
+);
 
-}
+showScreen(collection);
 
-// Override render to animate cards
-const oldRender=renderLetters;
-
-renderLetters=function(){
-
-    oldRender();
-
-    animateEnvelopes();
+renderLetters();
 
 }
 
-// Start website
-window.onload=function(){
+// =====================================
+// Helper Functions
+// =====================================
 
-    showScreen(opening);
+function playTransition(callback){
 
-    renderLetters();
+const transition=document.getElementById("transition");
+
+transition.classList.add("show");
+
+setTimeout(()=>{
+
+if(callback){
+
+callback();
 
 }
+
+transition.classList.remove("show");
+
+},500);
+
+}
+
+// =====================================
+// Open Letter With Transition
+// =====================================
+
+const originalOpenLetter=openLetter;
+
+openLetter=function(index){
+
+playTransition(()=>{
+
+originalOpenLetter(index);
+
+});
+
+};
+// =====================================
+// Startup
+// =====================================
+
+window.addEventListener("load",()=>{
+
+showScreen(opening);
+
+letters = JSON.parse(localStorage.getItem("letters")) || [];
+
+renderLetters();
+
+});
+
+// =====================================
+// Keyboard Shortcut
+// Ctrl/Cmd + Enter = Save Letter
+// =====================================
+
+document.getElementById("content").addEventListener("keydown",(e)=>{
+
+if((e.ctrlKey || e.metaKey) && e.key==="Enter"){
+
+e.preventDefault();
+
+saveLetter();
+
+}
+
+});
+
+// =====================================
+// Keep Local Storage Synced
+// =====================================
+
+window.addEventListener("storage",()=>{
+
+letters = JSON.parse(localStorage.getItem("letters")) || [];
+
+renderLetters();
+
+});
