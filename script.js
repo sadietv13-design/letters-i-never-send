@@ -57,3 +57,23 @@ function renderLetters(){
 }
 
 renderLetters();
+
+// ===== Envelope Animation =====
+
+function playEnvelopeAnimation(callback) {
+    const overlay = document.getElementById("envelopeOverlay");
+    const envelope = document.querySelector(".envelope");
+
+    overlay.classList.remove("hidden");
+
+    setTimeout(() => {
+        envelope.classList.add("open");
+    }, 200);
+
+    setTimeout(() => {
+        overlay.classList.add("hidden");
+        envelope.classList.remove("open");
+
+        if (callback) callback();
+    }, 1800);
+}
