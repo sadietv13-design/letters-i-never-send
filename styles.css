@@ -1,158 +1,532 @@
-body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg,#eaf3ff,#d6e8ff);
-    color:#23354d;
+/* =========================
+   LETTERS I NEVER SENT v2
+   Part 1 - Base & Opening
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
+
+body{
+
+    background:linear-gradient(180deg,#10233d,#18395e,#214c79);
+
+    font-family:'Inter',sans-serif;
+
+    color:white;
+
+    overflow-x:hidden;
+
+    min-height:100vh;
+
+}
+
+h1,h2{
+
+    font-family:'Cormorant Garamond',serif;
+
+}
+
+.screen{
+
+    display:none;
+
+    min-height:100vh;
+
+    padding:40px 20px;
+
+}
+
+.screen.active{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+}
+
+/* ---------- Opening ---------- */
+
+#opening{
+
+    text-align:center;
+
+}
+
+#opening h1{
+
+    font-size:56px;
+
+    margin-bottom:15px;
+
+    letter-spacing:2px;
+
+}
+
+#opening p{
+
+    color:#d8e8ff;
+
+    line-height:1.8;
+
+    margin-bottom:40px;
+
+}
+
+.tap{
+
+    margin-top:35px;
+
+    opacity:.7;
+
+    animation:blink 2s infinite;
+
+}
+
+/* ---------- Envelope ---------- */
+
+.big-envelope{
+
+    width:240px;
+
+    height:160px;
+
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.6s;
+
+}
+
+.big-envelope:hover{
+
+    transform:scale(1.05);
+
+}
+
+.big-envelope::before{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:0;
+
+    width:100%;
+
+    height:120px;
+
+    background:#6f9bd8;
+
+    border-radius:8px;
+
+    box-shadow:0 20px 40px rgba(0,0,0,.35);
+
+}
+
+.flap{
+
+    position:absolute;
+
+    top:0;
+
+    width:0;
+
+    height:0;
+
+    border-left:120px solid transparent;
+
+    border-right:120px solid transparent;
+
+    border-top:80px solid #8cb5eb;
+
+    transform-origin:top;
+
+    transition:1s;
+
+}
+
+.paper{
+
+    position:absolute;
+
+    left:20px;
+
+    right:20px;
+
+    bottom:15px;
+
+    height:140px;
+
+    background:white;
+
+    border-radius:6px;
+
+    transform:translateY(95px);
+
+    transition:1.2s;
+
+}
+
+.big-envelope.open .flap{
+
+    transform:rotateX(180deg);
+
+}
+
+.big-envelope.open .paper{
+
+    transform:translateY(-35px);
+
+}
+
+@keyframes blink{
+
+    50%{
+
+        opacity:.3;
+
+    }
+
+}
+/* =========================
+   PART 2 - COLLECTION
+========================= */
 
 header{
-    text-align:center;
-    padding:50px 20px 20px;
-}
 
-header h1{
-    font-family:'Cormorant Garamond',serif;
-    font-size:45px;
-    margin:0;
-}
-
-header p{
-    opacity:.7;
-}
-
-.container{
-    max-width:800px;
-    margin:auto;
-    padding:20px;
-}
-
-.composer{
-    background:white;
-    padding:20px;
-    border-radius:15px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-input,textarea{
     width:100%;
-    margin-bottom:15px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+}
+
+header h2{
+
+    font-size:42px;
+
+}
+
+#newLetterBtn{
+
+    background:#8bbcff;
+
+    color:#10233d;
+
     border:none;
-    border-bottom:1px solid #ccc;
-    padding:10px 0;
-    font-size:15px;
-    background:transparent;
-    outline:none;
+
+    padding:12px 22px;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.3s;
+
+}
+
+#newLetterBtn:hover{
+
+    transform:translateY(-2px);
+
+    background:#b7d4ff;
+
+}
+
+#letterGrid{
+
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+
+    gap:24px;
+
+}
+
+.letter-card{
+
+    height:120px;
+
+    background:#6f9bd8;
+
+    border-radius:10px;
+
+    position:relative;
+
+    cursor:pointer;
+
+    transition:.35s;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.25);
+
+}
+
+.letter-card:hover{
+
+    transform:translateY(-8px) scale(1.03);
+
+}
+
+.letter-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:0;
+
+    left:0;
+
+    width:0;
+
+    height:0;
+
+    border-left:80px solid transparent;
+
+    border-right:80px solid transparent;
+
+    border-top:55px solid #9fc6ff;
+
+}
+
+.letter-title{
+
+    position:absolute;
+
+    bottom:15px;
+
+    width:100%;
+
+    text-align:center;
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:22px;
+
+    color:white;
+
+}
+/* =========================
+   PART 3 - WRITER & READER
+========================= */
+
+#writer,
+#reader{
+
+    max-width:900px;
+
+    margin:auto;
+
+    width:100%;
+
+}
+
+#writer h2,
+#reader h2{
+
+    font-size:42px;
+
+    margin-bottom:25px;
+
+}
+
+input,
+textarea{
+
+    width:100%;
+
+    margin-bottom:18px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:rgba(255,255,255,.12);
+
+    color:white;
+
+    font-size:16px;
+
+    backdrop-filter:blur(10px);
+
+}
+
+input::placeholder,
+textarea::placeholder{
+
+    color:#d4e5ff;
+
 }
 
 textarea{
-    height:150px;
+
+    height:250px;
+
     resize:none;
+
 }
 
-button{
-    background:#4d7ed9;
-    color:white;
+#saveBtn,
+.backBtn,
+.deleteBtn{
+
+    padding:14px 24px;
+
     border:none;
-    padding:12px 18px;
-    border-radius:8px;
+
+    border-radius:30px;
+
     cursor:pointer;
+
+    margin-top:12px;
+
+    font-weight:bold;
+
+    transition:.3s;
+
 }
 
-button:hover{
-    background:#3c68bb;
+#saveBtn{
+
+    background:#9fc6ff;
+
+    color:#10233d;
+
 }
 
-.entry{
-    margin-top:20px;
-    background:white;
-    padding:20px;
-    border-left:4px solid #4d7ed9;
-    border-radius:10px;
-    box-shadow:0 5px 15px rgba(0,0,0,.05);
+.backBtn{
+
+    background:#355b8b;
+
+    color:white;
+
+}
+
+.deleteBtn{
+
+    background:#c84d67;
+
+    color:white;
+
+}
+
+#saveBtn:hover,
+.backBtn:hover,
+.deleteBtn:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* =========================
+   LETTER VIEW
+========================= */
+
+#letterView{
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    padding:30px;
+
+    backdrop-filter:blur(12px);
+
+    box-shadow:0 20px 40px rgba(0,0,0,.25);
+
+}
+
+#letterView h3{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:40px;
+
+    margin-bottom:12px;
+
+}
+
+#letterView p{
+
+    line-height:1.8;
+
+    margin:16px 0;
+
 }
 
 .meta{
-    font-size:12px;
-    opacity:.6;
+
+    opacity:.7;
+
+    margin-bottom:20px;
+
 }
 
-.title{
-    font-weight:bold;
-    margin:10px 0;
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+#opening h1{
+
+font-size:42px;
+
 }
 
-.media{
-    margin-top:10px;
-    color:#4d7ed9;
+.big-envelope{
+
+width:180px;
+
+height:130px;
+
 }
 
-/* ===== Envelope Animation ===== */
+.flap{
 
-.hidden {
-    display: none;
+border-left:90px solid transparent;
+border-right:90px solid transparent;
+border-top:60px solid #8cb5eb;
+
 }
 
-#envelopeOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(245, 239, 227, 0.95);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+.paper{
+
+height:110px;
+
 }
 
-.envelope {
-    width: 280px;
-    height: 180px;
-    position: relative;
+header{
+
+flex-direction:column;
+
+gap:15px;
+
 }
 
-.envelope::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 110px;
-    background: #d8b98d;
-    border-radius: 0 0 8px 8px;
+header h2{
+
+font-size:34px;
+
 }
 
-.flap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0;
-    height: 0;
-    border-left: 140px solid transparent;
-    border-right: 140px solid transparent;
-    border-top: 90px solid #caa472;
-    transform-origin: top;
-    transition: transform 0.8s ease;
 }
-
-.paper {
-    position: absolute;
-    left: 20px;
-    right: 20px;
-    bottom: 20px;
-    height: 140px;
-    background: #fffdf8;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Cormorant Garamond", serif;
-    font-size: 28px;
-    color: #4a3b2a;
-    transform: translateY(90px);
-    transition: transform 1s ease;
-}
-
-.envelope.open .flap {
-    transform: rotateX(180deg);
-}
-
-.envelope.open .paper {
-    transform: translateY(-40px);
-    }
