@@ -1,38 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>letters i never sent</title>
 
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Letters I Never Sent</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
 </head>
+
 <body>
 
-<header>
-    <h1>letters i never sent</h1>
-    <p>a place for things you never said out loud</p>
-</header>
+<!-- ================= OPENING SCREEN ================= -->
 
-<div class="container">
+<section id="opening" class="screen active">
 
-    <section class="composer">
-        <input id="title" type="text" placeholder="Title of this letter...">
+<h1>letters i never sent</h1>
 
-        <textarea id="content" placeholder="Write your letter..."></textarea>
+<p>
+A place for every word<br>
+you never had the courage to say.
+</p>
 
-        <input id="song" type="text" placeholder="Song recommendation (optional)">
+<div id="startEnvelope" class="big-envelope">
 
-        <input id="film" type="text" placeholder="Film recommendation (optional)">
+<div class="flap"></div>
 
-        <button onclick="saveLetter()">Save Letter</button>
-    </section>
-
-    <section id="entries"></section>
+<div class="paper"></div>
 
 </div>
+
+<p class="tap">Tap the envelope</p>
+
+</section>
+
+<!-- ================= COLLECTION ================= -->
+
+<section id="collection" class="screen">
+
+<header>
+
+<h2>Your Letters</h2>
+
+<button id="newLetterBtn">+ New Letter</button>
+
+</header>
+
+<div id="letterGrid"></div>
+
+</section>
+
+<!-- ================= WRITER ================= -->
+
+<section id="writer" class="screen">
+
+<h2>Write a Letter</h2>
+
+<input
+id="title"
+type="text"
+placeholder="Letter title..."
+>
+
+<textarea
+id="content"
+placeholder="Write your heart out..."
+></textarea>
+
+<input
+id="song"
+type="text"
+placeholder="Song recommendation"
+>
+
+<input
+id="film"
+type="text"
+placeholder="Film recommendation"
+>
+
+<button id="saveBtn">
+Seal Letter ✉️
+</button>
+
+<button class="backBtn">
+Back
+</button>
+
+</section>
+
+<!-- ================= READER ================= -->
+
+<section id="reader" class="screen">
+
+<div id="letterView"></div>
+
+<button class="backBtn">
+Back
+</button>
+
+</section>
 
 <script src="script.js"></script>
 
